@@ -2,78 +2,98 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>For You ❤️</title>
 
 <style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background: linear-gradient(135deg, #ffd6e8, #ffc2dd);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100svh; /* better for mobile */
+  padding: 20px;
   overflow: hidden;
-  text-align: center;
 }
 
 .container {
   background: #fff0f6;
-  padding: 50px;
+  padding: 35px 25px;
   border-radius: 25px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-  width: 90%;
-  max-width: 400px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
   position: relative;
 }
 
 h1 {
   color: #c2185b;
+  font-size: 1.8rem;
   margin-bottom: 10px;
 }
 
 p {
   color: #e91e63;
-  margin-bottom: 30px;
+  font-size: 1rem;
+  margin-bottom: 25px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  position: relative;
 }
 
 button {
-  padding: 12px 25px;
+  padding: 12px 22px;
   font-size: 1rem;
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  margin: 10px;
-  transition: 0.3s;
+  transition: transform 0.2s ease;
 }
 
 .yes {
   background: linear-gradient(45deg, #ff4fa3, #ff1493);
   color: white;
+  box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
 }
 
 .no {
   background: #ffc0cb;
   color: #b3005e;
-  position: relative;
+  position: absolute;
 }
 
 .hidden {
   display: none;
 }
 
+/* Floating hearts */
 .heart {
   position: fixed;
   bottom: -20px;
-  font-size: 20px;
-  animation: floatUp 6s linear infinite;
-  color: #ff4fa3;
+  animation: floatUp 5s linear forwards;
+  pointer-events: none;
 }
 
 @keyframes floatUp {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-100vh); opacity: 0; }
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-110vh); opacity: 0; }
+}
+
+@media (max-width: 400px) {
+  h1 { font-size: 1.6rem; }
+  p { font-size: 0.95rem; }
 }
 </style>
 </head>
@@ -82,10 +102,13 @@ button {
 
 <div class="container" id="question">
   <h1>❤️</h1>
-  <p>Will you be my Valentine?
-  <p>/n</p>-Yash🥹</p>
-  <button class="yes" onclick="sayYes()">Yes 💖</button>
-  <button class="no" onmouseover="moveNo(this)">No 💔</button>
+  <p>Will you be my Valentine?<br>
+  -Yash</p>
+
+  <div class="buttons" id="buttonArea">
+    <button class="yes" onclick="sayYes()">Yes 💖</button>
+    <button class="no" id="noBtn">No 💔</button>
+  </div>
 </div>
 
 <div class="container hidden" id="yay">
@@ -95,11 +118,23 @@ button {
 </div>
 
 <script>
-function moveNo(btn) {
-  const x = Math.random() * 200 - 100;
-  const y = Math.random() * 200 - 100;
-  btn.style.transform = `translate(${x}px, ${y}px)`;
+const noBtn = document.getElementById("noBtn");
+const buttonArea = document.getElementById("buttonArea");
+
+function moveNo() {
+  const areaRect = buttonArea.getBoundingClientRect();
+  const maxX = areaRect.width - noBtn.offsetWidth;
+  const maxY = 60;
+
+  const randomX = Math.random() * maxX;
+  const randomY = Math.random() * maxY;
+
+  noBtn.style.left = randomX + "px";
+  noBtn.style.top = randomY + "px";
 }
+
+noBtn.addEventListener("touchstart", moveNo);
+noBtn.addEventListener("mouseover", moveNo);
 
 function sayYes() {
   document.getElementById("question").classList.add("hidden");
@@ -112,12 +147,13 @@ setInterval(() => {
   heart.classList.add("heart");
   heart.innerHTML = "💖";
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+  heart.style.fontSize = (Math.random() * 15 + 15) + "px";
   document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}, 500);
+  setTimeout(() => heart.remove(), 5000);
+}, 700);
 </script>
 
 </body>
 </html>
+
 
