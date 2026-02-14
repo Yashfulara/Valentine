@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You ❤️</title>
 
 <style>
@@ -18,8 +18,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100svh; /* better for mobile */
+  min-height: 100svh;
   padding: 20px;
+  text-align: center;
   overflow: hidden;
 }
 
@@ -30,8 +31,6 @@ body {
   box-shadow: 0 20px 40px rgba(0,0,0,0.12);
   width: 100%;
   max-width: 380px;
-  text-align: center;
-  position: relative;
 }
 
 h1 {
@@ -44,13 +43,14 @@ p {
   color: #e91e63;
   font-size: 1rem;
   margin-bottom: 25px;
+  min-height: 24px;
 }
 
 .buttons {
   display: flex;
   justify-content: center;
   gap: 15px;
-  position: relative;
+  align-items: center;
 }
 
 button {
@@ -59,7 +59,7 @@ button {
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .yes {
@@ -71,14 +71,13 @@ button {
 .no {
   background: #ffc0cb;
   color: #b3005e;
-  position: absolute;
 }
 
 .hidden {
   display: none;
 }
 
-/* Floating hearts */
+/* floating hearts */
 .heart {
   position: fixed;
   bottom: -20px;
@@ -90,11 +89,6 @@ button {
   from { transform: translateY(0); opacity: 1; }
   to { transform: translateY(-110vh); opacity: 0; }
 }
-
-@media (max-width: 400px) {
-  h1 { font-size: 1.6rem; }
-  p { font-size: 0.95rem; }
-}
 </style>
 </head>
 
@@ -102,39 +96,52 @@ button {
 
 <div class="container" id="question">
   <h1>❤️</h1>
-  <p>Will you be my Valentine?<br>
-  -Yash</p>
+  <p id="questionText">Will you be my Valentine?<br>
+  -YASH</p>
 
-  <div class="buttons" id="buttonArea">
-    <button class="yes" onclick="sayYes()">Yes 💖</button>
+  <div class="buttons">
+    <button class="yes" id="yesBtn" onclick="sayYes()">Yes 💖</button>
     <button class="no" id="noBtn">No 💔</button>
   </div>
 </div>
 
 <div class="container hidden" id="yay">
   <h1>YAYYY 🥹💘</h1>
-  <p></p>
+  <p>You just made me the happiest person alive.</p>
   <p>Happy Valentine’s Day ❤️</p>
 </div>
 
 <script>
 const noBtn = document.getElementById("noBtn");
-const buttonArea = document.getElementById("buttonArea");
+const yesBtn = document.getElementById("yesBtn");
+const questionText = document.getElementById("questionText");
 
-function moveNo() {
-  const areaRect = buttonArea.getBoundingClientRect();
-  const maxX = areaRect.width - noBtn.offsetWidth;
-  const maxY = 60;
+let noClicks = 0;
+let yesScale = 1;
 
-  const randomX = Math.random() * maxX;
-  const randomY = Math.random() * maxY;
+const messages = [
+  "Are you sure? 🥺",
+  "Think again 😢",
+  "Really really sure?",
+  "Don't break my heart 💔",
+  "I'll be very sad...",
+  "Please reconsider 🥹",
+  "You're joking right??",
+  "Last chance 😭"
+];
 
-  noBtn.style.left = randomX + "px";
-  noBtn.style.top = randomY + "px";
-}
+noBtn.addEventListener("click", () => {
+  if (noClicks < messages.length) {
+    questionText.textContent = messages[noClicks];
+  } else {
+    questionText.textContent = "Okay fine... just press Yes already 😭💘";
+  }
 
-noBtn.addEventListener("touchstart", moveNo);
-noBtn.addEventListener("mouseover", moveNo);
+  noClicks++;
+
+  yesScale += 0.2;
+  yesBtn.style.transform = `scale(${yesScale})`;
+});
 
 function sayYes() {
   document.getElementById("question").classList.add("hidden");
@@ -155,5 +162,3 @@ setInterval(() => {
 
 </body>
 </html>
-
-
