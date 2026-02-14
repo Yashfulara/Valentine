@@ -3,59 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Will You Be My Valentine?</title>
+<title>For You ❤️</title>
+
 <style>
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, #f8d7e3, #f2c6d8);
+  background: linear-gradient(135deg, #ffd6e8, #ffc2dd);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
   text-align: center;
-  overflow-x: hidden;
 }
 
-h1 {
-  margin-top: 60px;
-  font-size: 3rem;
-  color: #b3005e;
-}
-
-h1 span {
-  color: #ff4fa3;
-}
-
-.subtitle {
-  color: #d63384;
-  font-size: 1.3rem;
-  margin-top: 10px;
-}
-
-.note {
-  color: #e83e8c;
-  font-style: italic;
-  margin-top: 10px;
-}
-
-.card {
-  margin: 60px auto;
-  width: 350px;
-  padding: 40px;
-  border-radius: 25px;
+.container {
   background: #fff0f6;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  padding: 50px;
+  border-radius: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 400px;
   position: relative;
 }
 
-.card h2 {
+h1 {
   color: #c2185b;
-  font-size: 2rem;
+  margin-bottom: 10px;
 }
 
-.card p {
+p {
   color: #e91e63;
-}
-
-.buttons {
-  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 button {
@@ -68,39 +48,21 @@ button {
   transition: 0.3s;
 }
 
-.yes-btn {
-  background: linear-gradient(45deg, #ff4fa3, #ff6f91);
+.yes {
+  background: linear-gradient(45deg, #ff4fa3, #ff1493);
   color: white;
 }
 
-.no-btn {
+.no {
   background: #ffc0cb;
   color: #b3005e;
   position: relative;
-}
-
-.create-btn {
-  display: inline-block;
-  margin-top: 50px;
-  padding: 15px 40px;
-  border-radius: 40px;
-  background: linear-gradient(45deg, #ff4fa3, #ff1493);
-  color: white;
-  font-size: 1.2rem;
-  text-decoration: none;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-  transition: 0.3s;
-}
-
-.create-btn:hover {
-  transform: scale(1.05);
 }
 
 .hidden {
   display: none;
 }
 
-/* Floating hearts */
 .heart {
   position: fixed;
   bottom: -20px;
@@ -115,48 +77,42 @@ button {
 }
 </style>
 </head>
+
 <body>
 
-<h1>The <span>"Will You Be My Valentine?"</span> Website 💌</h1>
-<p class="subtitle">Free Valentine Proposal Website & Link Generator</p>
-<p class="subtitle">Create a personalized valentine link and send it to your crush</p>
-<p class="note">(the "No" button runs away — they can only say yes)</p>
-
-<div class="card" id="card">
-  <h2>Will you be my Valentine? 💖</h2>
-  <div class="buttons">
-    <button class="yes-btn" onclick="sayYes()">Yes 💘</button>
-    <button class="no-btn" onmouseover="moveButton(this)">No 💔</button>
-  </div>
+<div class="container" id="question">
+  <h1>❤️</h1>
+  <p>Will you be my Valentine?
+  -Yash🥹</p>
+  <button class="yes" onclick="sayYes()">Yes 💖</button>
+  <button class="no" onmouseover="moveNo(this)">No 💔</button>
 </div>
 
-<div class="card hidden" id="yayCard">
-  <h2>Yay! 💖</h2>
-  <p>You made my day!</p>
-  <p>Happy Valentine's Day! 💕</p>
+<div class="container hidden" id="yay">
+  <h1>YAYYY 🥹💘</h1>
+  <p>You just made me the happiest person alive.</p>
+  <p>Happy Valentine’s Day ❤️</p>
 </div>
-
-<a href="#" class="create-btn">↓ Create Yours 💝</a>
 
 <script>
-function moveButton(btn) {
+function moveNo(btn) {
   const x = Math.random() * 200 - 100;
   const y = Math.random() * 200 - 100;
   btn.style.transform = `translate(${x}px, ${y}px)`;
 }
 
 function sayYes() {
-  document.getElementById('card').classList.add('hidden');
-  document.getElementById('yayCard').classList.remove('hidden');
+  document.getElementById("question").classList.add("hidden");
+  document.getElementById("yay").classList.remove("hidden");
 }
 
-// Floating hearts generator
+// floating hearts
 setInterval(() => {
-  const heart = document.createElement('div');
-  heart.classList.add('heart');
-  heart.innerHTML = "💗";
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "💖";
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+  heart.style.fontSize = (Math.random() * 20 + 15) + "px";
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 6000);
 }, 500);
@@ -164,3 +120,4 @@ setInterval(() => {
 
 </body>
 </html>
+
